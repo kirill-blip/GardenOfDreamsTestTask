@@ -2,25 +2,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int _currentHealth = 50;
-    [SerializeField] private int _maxHealth = 100;
+    public Health Health { get; private set; }
 
-    private HealthBar _healthBar;
+    public Weapon CurrentWeapon { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
-        _healthBar = GetComponentInChildren<HealthBar>();
-        _healthBar.SetHealth(_currentHealth);
+        Health = GetComponent<Health>();
     }
 
-    private void Update()
+    public void SetWeapon(Weapon weapon)
     {
-        _healthBar.SetHealth(_currentHealth);
-    }
-
-    public void Heal(int hitPoint)
-    {
-        _currentHealth = Mathf.Min(_maxHealth, (_currentHealth + hitPoint));
-        _healthBar.SetHealth(_currentHealth);
+        CurrentWeapon = weapon;
     }
 }

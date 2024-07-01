@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private void Start() { }
+    public Health Health { get; private set; }
 
-    private void Update() { }
+    private void Start() 
+    {
+        Health = GetComponent<Health>();
+    }
 }

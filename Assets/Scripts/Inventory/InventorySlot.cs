@@ -3,8 +3,8 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
-    [SerializeField] private InventoryItem _inventoryItem;
-    [SerializeField] private RectTransform _inventoryItemTransform;
+    [SerializeField] private Stack _stack;
+    [SerializeField] private RectTransform _stackTransform;
 
     private RectTransform _rectTransform;
 
@@ -17,30 +17,32 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         if (eventData.pointerDrag is not null && !HasItem())
         {
-            AddItem(eventData.pointerDrag.GetComponent<InventoryItem>());
+            AddItem(eventData.pointerDrag.GetComponent<Stack>());
         }
     }
 
     public bool HasItem()
     {
-        return _inventoryItem is not null;
+        return _stack is not null;
     }
 
-    public void AddItem(InventoryItem inventoryItem)
+    public void AddItem(Stack stack)
     {
-        _inventoryItem = inventoryItem;
-        _inventoryItemTransform = inventoryItem.GetComponent<RectTransform>();
+        _stack = stack;
+        _stackTransform = stack.GetComponent<RectTransform>();
 
-        _inventoryItemTransform.SetParent(_rectTransform);
-        _inventoryItemTransform.anchoredPosition = Vector2.zero;
+        _stackTransform.SetParent(_rectTransform);
+        _stackTransform.anchoredPosition = Vector2.zero;
     }
 
-    public void RemoveItem(InventoryItem inventoryItem)
+    public void RemoveStack()
     {
-        if (_inventoryItem == inventoryItem && _inventoryItemTransform.parent != _rectTransform)
-        {
-            _inventoryItem = null;
-            _inventoryItemTransform = null;
-        }
+        _stack = null;
+        _stackTransform = null;
+    }
+
+    public Stack GetStack()
+    {
+        return _stack;
     }
 }
