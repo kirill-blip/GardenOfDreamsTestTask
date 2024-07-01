@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private Player _player;
     private Enemy _enemy;
     private InventoryManager _inventoryManager;
+    private EquipManager _equipManager;
 
     private bool _isPreviousHead = false;
 
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         _player = FindObjectOfType<Player>();
         _enemy = FindObjectOfType<Enemy>();
         _inventoryManager = FindObjectOfType<InventoryManager>();
+        _equipManager = FindObjectOfType<EquipManager>();
 
         _player.Health.EntityDied += PlayerDiedHandler;
         _enemy.Health.EntityDied += EnemyDiedHandler;
@@ -50,7 +52,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void PlayerDiedHandler() 
+    private void PlayerDiedHandler()
     {
         _gameOverPanel.gameObject.SetActive(true);
     }
@@ -70,14 +72,16 @@ public class GameManager : MonoBehaviour
                 _enemy.Health.Damage(_player.CurrentWeapon.GetDamage());
             }
 
-            if (_isPreviousHead)
+            //if (_isPreviousHead)
+            //{
+            //    int actualDamage = _headDamageToPlayer - _equipManager.GetHeadShield();
+            //    _player.Health.Damage(actualDamage);
+            //    _isPreviousHead = !_isPreviousHead;
+            //}
+            //else
             {
-                _player.Health.Damage(_headDamageToPlayer);
-                _isPreviousHead = !_isPreviousHead;
-            }
-            else
-            {
-                _player.Health.Damage(_damageToPlayer);
+                int actualDamage = _damageToPlayer - _equipManager.GetBodyShield();
+                _player.Health.Damage(actualDamage);
                 _isPreviousHead = !_isPreviousHead;
             }
 

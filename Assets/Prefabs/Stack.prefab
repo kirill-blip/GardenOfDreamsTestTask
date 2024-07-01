@@ -187,8 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventoryItem: {fileID: 0}
   _countText: {fileID: 2696323404335267977}
-  _currentCount: 1
-  _maxCount: 6
+  _image: {fileID: 8430852831528410995}
 --- !u!114 &4709452479418608043
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Stack : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class Stack : MonoBehaviour
 
     [Space(10f)]
     [SerializeField] private TextMeshProUGUI _countText;
+    [SerializeField] private Image _image;
 
     private int _currentCount = 1;
     private int _maxCount = 6;
@@ -80,6 +82,8 @@ public class Stack : MonoBehaviour
         {
             _currentCount = _inventoryItem.Count;
             _maxCount = _inventoryItem.MaxCount;
+
+            _image.sprite = _inventoryItem.Sprite;
         }
     }
 

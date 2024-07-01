@@ -53,7 +53,39 @@ public class PopupPanel : MonoBehaviour
         Disenable();
     }
 
-    private void EquipButtonHandler() { }
+    private void EquipButtonHandler()
+    {
+        EquipManager equipManager = FindObjectOfType<EquipManager>();
+
+        if (_inventoryItem.GetType() == typeof(BodyArmor))
+        {
+            if (!equipManager.HasBodyArmor())
+            {
+                _inventoryManager.RemoveItem(_inventoryItem);
+                equipManager.EquipBodyArmor(bodyArmor: (_inventoryItem as BodyArmor));
+            }
+            else
+            {
+                _inventoryManager.Swap(_inventoryItem, equipManager.GetInventoryItem());
+                equipManager.EquipBodyArmor(bodyArmor: (_inventoryItem as BodyArmor));
+            }
+        }
+        else if (_inventoryItem.GetType() == typeof(Jacket))
+        {
+            if (!equipManager.HasBodyArmor())
+            {
+                _inventoryManager.RemoveItem(_inventoryItem);
+                equipManager.EquipBodyArmor(jacket: (_inventoryItem as Jacket));
+            }
+            else
+            {
+                _inventoryManager.Swap(_inventoryItem, equipManager.GetInventoryItem());
+                equipManager.EquipBodyArmor(jacket: (_inventoryItem as Jacket));
+            }
+        }
+
+        Disenable();
+    }
 
     private void Enable()
     {
@@ -90,6 +122,12 @@ public class PopupPanel : MonoBehaviour
                 _shieldInfo.gameObject.SetActive(true);
 
                 _shieldInfoText.text = bodyArmor.Shield.ToString();
+                break;
+            case Jacket jacket:
+                _equipButton.gameObject.SetActive(true);
+                _shieldInfo.gameObject.SetActive(true);
+
+                _shieldInfoText.text = jacket.Shield.ToString();
                 break;
         }
     }

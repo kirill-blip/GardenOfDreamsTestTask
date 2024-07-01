@@ -28,6 +28,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
     public void AddItem(Stack stack)
     {
+        Debug.LogError("I'm here");
+
         _stack = stack;
         _stackTransform = stack.GetComponent<RectTransform>();
 

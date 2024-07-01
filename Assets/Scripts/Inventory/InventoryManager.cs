@@ -15,7 +15,6 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        //_inventoryStacks = FindObjectsOfType<Stack>().ToList();
         _inventorySlots = FindObjectsOfType<InventorySlot>().ToList();
 
         foreach (Stack stack in _inventoryStacks)
@@ -36,7 +35,7 @@ public class InventoryManager : MonoBehaviour
     {
         foreach (InventorySlot inventorySlot in _inventorySlots)
         {
-            bool hasStackInSlot = stack.transform.parent == inventorySlot.GetStack();
+            bool hasStackInSlot = stack == inventorySlot.GetStack();
             bool isNotParent = stack.transform.parent != inventorySlot.transform.parent;
 
             if (hasStackInSlot && isNotParent)
@@ -81,11 +80,26 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void AddItem(InventoryItem inventoryItem, InventorySlot inventorySlot)
+    {
+        Stack createdStack = Instantiate(_stackPrefab);
+        createdStack.Init(inventoryItem);
+
+        createdStack.StackMovement.DraggingStopped += DraggedStoppedHandler;
+        createdStack.StackMovement.StackClicked += StackClickedHandler;
+
+        _inventoryStacks.Add(createdStack);
+        inventorySlot.AddItem(createdStack);
+    }
+
     public void RemoveItem(InventoryItem inventoryItem)
     {
         Stack stack;
+
         switch (inventoryItem)
         {
+            case BodyArmor:
+            case Jacket:
             case AidKit:
                 stack = _inventoryStacks.LastOrDefault(x => x.InventoryItem.GetType() == inventoryItem.GetType());
                 stack.RemoveItem();
@@ -94,12 +108,17 @@ public class InventoryManager : MonoBehaviour
                 {
                     foreach (InventorySlot inventorySlot in _inventorySlots)
                     {
-                        inventorySlot.RemoveStack();
+                        bool hasStackInSlot = stack == inventorySlot.GetStack();
+                        bool isNotParent = stack.transform.parent != inventorySlot.transform.parent;
+
+                        if (hasStackInSlot && isNotParent)
+                        {
+                            inventorySlot.RemoveStack();
+                        }
                     }
 
-                    Destroy(stack.gameObject);
-
                     _inventoryStacks.Remove(stack);
+                    Destroy(stack.gameObject);
                 }
                 break;
             case Bullets:
@@ -140,20 +159,61 @@ public class InventoryManager : MonoBehaviour
 
     public bool HasBullets(WeaponType weaponType)
     {
-        Stack stack = _inventoryStacks.Find(x => (x.InventoryItem as Bullets).WeaponType == weaponType);
-        return !stack.IsEmpty();
+        foreach (Stack stack in _inventoryStacks)
+        {
+            if (stack.InventoryItem.GetType() == typeof(Bullets))
+            {
+                if ((stack.InventoryItem as Bullets).WeaponType == weaponType)
+                {
+                    return !stack.IsEmpty();
+                }
+            }
+        }
+
+        return false;
     }
 
     public void RemoveBullet(WeaponType weaponType, int count)
     {
-        Stack stack = _inventoryStacks.Find(x => (x.InventoryItem as Bullets).WeaponType == weaponType);
-        stack.RemoveItem(count);
+        foreach (Stack stack in _inventoryStacks)
+        {
+            if (stack.InventoryItem.GetType() == typeof(Bullets))
+            {
+                if ((stack.InventoryItem as Bullets).WeaponType == weaponType)
+                {
+                    stack.RemoveItem(count);
+                }
+            }
+        }
     }
 
     public void FillBullets(InventoryItem inventoryItem)
     {
         Bullets bullets = inventoryItem as Bullets;
-        Stack stack = _inventoryStacks.Find(x => (x.InventoryItem as Bullets).WeaponType == bullets.WeaponType);
-        stack.FillToMaxCount();
+
+        foreach (Stack stack in _inventoryStacks)
+        {
+            if (stack.InventoryItem.GetType() == typeof(Bullets))
+            {
+                if ((stack.InventoryItem as Bullets).WeaponType == bullets.WeaponType)
+                {
+                    stack.FillToMaxCount();
+                }
+            }
+        }
+    }
+
+    public Stack GetStack(InventoryItem inventoryItem)
+    {
+        return _inventoryStacks.LastOrDefault(x => x.InventoryItem.GetType() == inventoryItem.GetType());
+    }
+
+    public void Swap(InventoryItem from, InventoryItem to)
+    {
+        Stack stack = GetStack(from);
+        InventorySlot inventorySlot = _inventorySlots.FirstOrDefault(x => x.GetStack() == stack);
+        
+        RemoveItem(from);
+        AddItem(to, inventorySlot);
     }
 }
