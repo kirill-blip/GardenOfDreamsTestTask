@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &127715379016078159
+--- !u!1 &99968144794269597
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3377427603136169477}
-  - component: {fileID: 1661233513366948689}
-  - component: {fileID: 8933889789385104377}
+  - component: {fileID: 5110842530970241550}
+  - component: {fileID: 128486246477683700}
+  - component: {fileID: 6589792950783206492}
   m_Layer: 5
   m_Name: CountText
   m_TagString: Untagged
@@ -18,14 +18,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &3377427603136169477
+--- !u!224 &5110842530970241550
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127715379016078159}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 99968144794269597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -37,21 +37,21 @@ RectTransform:
   m_AnchoredPosition: {x: -20, y: 20}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1661233513366948689
+--- !u!222 &128486246477683700
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127715379016078159}
+  m_GameObject: {fileID: 99968144794269597}
   m_CullTransparentMesh: 1
---- !u!114 &8933889789385104377
+--- !u!114 &6589792950783206492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127715379016078159}
+  m_GameObject: {fileID: 99968144794269597}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -161,7 +161,7 @@ RectTransform:
   m_GameObject: {fileID: 3394647004279663237}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1272418102692388076}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 79c67f58e7d60e24288168d4e9ec6ef7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 34d3bd243bacf7c4abd5cfed3cfd5ec0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -218,9 +218,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1272418102692388076}
-  - component: {fileID: 2334387770593154618}
+  - component: {fileID: -6136923253193222382}
   m_Layer: 5
-  m_Name: PistolBullets
+  m_Name: Halmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,15 +239,15 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8015182515100690848}
-  - {fileID: 3377427603136169477}
+  - {fileID: 5110842530970241550}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2334387770593154618
+--- !u!114 &-6136923253193222382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -256,11 +256,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5126105092924640219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 476a4012d1af8c54298edea78028977e, type: 3}
+  m_Script: {fileID: 11500000, guid: ae5263cc04cd0814cb02b07c17d6058e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 79c67f58e7d60e24288168d4e9ec6ef7, type: 3}
-  Weight: 0.01
-  Count: 50
-  MaxCount: 50
-  WeaponType: 0
+  Sprite: {fileID: 21300000, guid: 3442776f35d689941b1c742f6d3d6c96, type: 3}
+  Weight: 1
+  Count: 1
+  MaxCount: 1
+  HeadType: 1
+  Shield: 10

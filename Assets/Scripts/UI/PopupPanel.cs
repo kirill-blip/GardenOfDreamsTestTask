@@ -9,6 +9,11 @@ public class PopupPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _hitPointText;
 
     [Space(10f)]
+    [SerializeField] private int _defaultPositionXOfWeight = 100;
+    [SerializeField] private RectTransform _weightInfo;
+    [SerializeField] private TextMeshProUGUI _weightText;
+
+    [Space(10f)]
     [SerializeField] private Image _image;
 
     [Space(10f)]
@@ -57,30 +62,45 @@ public class PopupPanel : MonoBehaviour
     {
         EquipManager equipManager = FindObjectOfType<EquipManager>();
 
-        if (_inventoryItem.GetType() == typeof(BodyArmor))
+        if (_inventoryItem is ShieldItem shieldItem)
         {
-            if (!equipManager.HasBodyArmor())
+            if (equipManager.HasBodyArmor())
             {
-                _inventoryManager.RemoveItem(_inventoryItem);
-                equipManager.EquipBodyArmor(bodyArmor: (_inventoryItem as BodyArmor));
+                _inventoryManager.Swap(_inventoryItem, equipManager.GetBodyArmor());
             }
             else
             {
-                _inventoryManager.Swap(_inventoryItem, equipManager.GetInventoryItem());
-                equipManager.EquipBodyArmor(bodyArmor: (_inventoryItem as BodyArmor));
+                _inventoryManager.RemoveItem(_inventoryItem);
+            }
+
+            equipManager.EquipBodyArmor(shieldItem);
+        }
+
+
+        if (_inventoryItem.GetType() == typeof(Cap))
+        {
+            if (!equipManager.HasHeadArmor())
+            {
+                _inventoryManager.RemoveItem(_inventoryItem);
+                equipManager.EquipHeadArmor(cap: (_inventoryItem as Cap));
+            }
+            else
+            {
+                _inventoryManager.Swap(_inventoryItem, equipManager.GetHeadArmor());
+                equipManager.EquipHeadArmor(cap: (_inventoryItem as Cap));
             }
         }
-        else if (_inventoryItem.GetType() == typeof(Jacket))
+        else if (_inventoryItem.GetType() == typeof(Halmet))
         {
-            if (!equipManager.HasBodyArmor())
+            if (!equipManager.HasHeadArmor())
             {
                 _inventoryManager.RemoveItem(_inventoryItem);
-                equipManager.EquipBodyArmor(jacket: (_inventoryItem as Jacket));
+                equipManager.EquipHeadArmor(halmet: (_inventoryItem as Halmet));
             }
             else
             {
-                _inventoryManager.Swap(_inventoryItem, equipManager.GetInventoryItem());
-                equipManager.EquipBodyArmor(jacket: (_inventoryItem as Jacket));
+                _inventoryManager.Swap(_inventoryItem, equipManager.GetHeadArmor());
+                equipManager.EquipHeadArmor(halmet: (_inventoryItem as Halmet));
             }
         }
 
@@ -104,6 +124,8 @@ public class PopupPanel : MonoBehaviour
         _inventoryItem = inventoryItem;
         _image.sprite = _inventoryItem.Sprite;
 
+        _weightText.text = inventoryItem.Weight.ToString();
+
         ResetPanel();
 
         switch (inventoryItem)
@@ -116,6 +138,7 @@ public class PopupPanel : MonoBehaviour
                 break;
             case Bullets:
                 _buyButton.gameObject.SetActive(true);
+                _weightInfo.anchoredPosition = new Vector2(0, _weightInfo.anchoredPosition.y);
                 break;
             case BodyArmor bodyArmor:
                 _equipButton.gameObject.SetActive(true);
@@ -129,11 +152,25 @@ public class PopupPanel : MonoBehaviour
 
                 _shieldInfoText.text = jacket.Shield.ToString();
                 break;
+            case Cap cap:
+                _equipButton.gameObject.SetActive(true);
+                _shieldInfo.gameObject.SetActive(true);
+
+                _shieldInfoText.text = cap.Shield.ToString();
+                break;
+            case Halmet halmet:
+                _equipButton.gameObject.SetActive(true);
+                _shieldInfo.gameObject.SetActive(true);
+
+                _shieldInfoText.text = halmet.Shield.ToString();
+                break;
         }
     }
 
     public void ResetPanel()
     {
+        _weightInfo.anchoredPosition = new Vector2(_defaultPositionXOfWeight, _weightInfo.anchoredPosition.y);
+
         _shieldInfo.SetActive(false);
         _hitPointText.gameObject.SetActive(false);
 

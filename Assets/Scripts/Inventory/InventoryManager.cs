@@ -10,20 +10,23 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] private PopupPanel _popupPanel;
 
-    [SerializeField] private List<Stack> _inventoryStacks;
-    private List<InventorySlot> _inventorySlots;
+    [SerializeField] private List<Stack> _inventoryStacks = new();
+    [SerializeField] private List<InventorySlot> _inventorySlots = new();
+
+    private bool _isStackLoaded = false;
 
     private void Start()
     {
-        _inventorySlots = FindObjectsOfType<InventorySlot>().ToList();
-
         foreach (Stack stack in _inventoryStacks)
         {
             stack.StackMovement.DraggingStopped += DraggedStoppedHandler;
             stack.StackMovement.StackClicked += StackClickedHandler;
         }
 
-        StartCoroutine(AddItemsToRandomSlots());
+        if (!_isStackLoaded)
+        {
+            StartCoroutine(AddItemsToRandomSlots());
+        }
     }
 
     private void StackClickedHandler(Stack stack)
@@ -80,7 +83,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItem(InventoryItem inventoryItem, InventorySlot inventorySlot)
+    public void AddItem(InventoryItem inventoryItem, InventorySlot inventorySlot, int count = 1)
     {
         Stack createdStack = Instantiate(_stackPrefab);
         createdStack.Init(inventoryItem);
@@ -90,6 +93,8 @@ public class InventoryManager : MonoBehaviour
 
         _inventoryStacks.Add(createdStack);
         inventorySlot.AddItem(createdStack);
+
+        createdStack.SetCount(count);
     }
 
     public void RemoveItem(InventoryItem inventoryItem)
@@ -100,6 +105,8 @@ public class InventoryManager : MonoBehaviour
         {
             case BodyArmor:
             case Jacket:
+            case Halmet:
+            case Cap:
             case AidKit:
                 stack = _inventoryStacks.LastOrDefault(x => x.InventoryItem.GetType() == inventoryItem.GetType());
                 stack.RemoveItem();
@@ -123,8 +130,21 @@ public class InventoryManager : MonoBehaviour
                 break;
             case Bullets:
                 Bullets bullets = inventoryItem as Bullets;
-                stack = _inventoryStacks.Find(x => (x.InventoryItem as Bullets).WeaponType == bullets.WeaponType);
-                stack.SetCountToZero();
+
+                foreach (var item in _inventoryStacks)
+                {
+                    if (item.InventoryItem is not null)
+                    {
+                        Bullets temp = item.InventoryItem as Bullets;
+
+                        if (temp is not null && temp.WeaponType == bullets.WeaponType)
+                        {
+                            Debug.Log(temp is null);
+                            Debug.Log(temp.WeaponType.ToString());
+                            item.SetCountToZero();
+                        }
+                    }
+                }
                 break;
         }
     }
@@ -212,8 +232,53 @@ public class InventoryManager : MonoBehaviour
     {
         Stack stack = GetStack(from);
         InventorySlot inventorySlot = _inventorySlots.FirstOrDefault(x => x.GetStack() == stack);
-        
+
         RemoveItem(from);
         AddItem(to, inventorySlot);
+    }
+
+    public void SetSlots(InventoryData inventoryData)
+    {
+        foreach (var item in _inventorySlots)
+        {
+            item.RemoveStack();
+        }
+
+        for (int i = 0; i < _inventoryStacks.Count; i++)
+        {
+            Destroy(_inventoryStacks[i].gameObject);
+        }
+
+        _inventoryStacks.Clear();
+
+        List<StackData> stackData = inventoryData.StackData.ToList();
+
+        for (int i = 0; i < stackData.Count; i++)
+        {
+            Debug.Log($"InventoryItem: {stackData[i].InventoryItem.Sprite.name}");
+            Debug.Log($"IndexOfSlot: {stackData[i].IndexOfSlot}");
+            Debug.Log($"Count: {stackData[i].Count}");
+
+            AddItem(stackData[i].InventoryItem, _inventorySlots[stackData[i].IndexOfSlot], stackData[i].Count);
+        }
+
+        _isStackLoaded = true;
+    }
+
+    public List<StackData> GetStackData()
+    {
+        List<StackData> stackData = new();
+
+        for (int i = 0; i < _inventoryStacks.Count; i++)
+        {
+            InventoryItem inventoryItem = _inventoryStacks[i].InventoryItem;
+            int count = _inventoryStacks[i].GetCount();
+            int indexOfSlot = _inventorySlots.FindIndex(x => x.GetStack() == _inventoryStacks[i]);
+
+            StackData stack = new StackData(inventoryItem, count, indexOfSlot);
+            stackData.Add(stack);
+        }
+
+        return stackData;
     }
 }

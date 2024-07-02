@@ -33,6 +33,11 @@ public class StackMovement : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     {
         DraggingStopped?.Invoke(_stack);
 
+        if (transform.parent == _rectTransform.parent)
+        {
+            GetComponentInParent<InventorySlot>().AddItem(_stack);
+        }
+
         _image.raycastTarget = true;
         _rectTransform.anchoredPosition = Vector2.zero;
     }

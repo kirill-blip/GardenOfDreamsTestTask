@@ -23,8 +23,15 @@ public class GameManager : MonoBehaviour
     private Enemy _enemy;
     private InventoryManager _inventoryManager;
     private EquipManager _equipManager;
+    private SaveSystem _saveSystem;
 
     private bool _isPreviousHead = false;
+
+    private void Awake()
+    {
+        _saveSystem = FindObjectOfType<SaveSystem>();
+        _saveSystem.Load();
+    }
 
     private void Start()
     {
@@ -52,6 +59,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        _saveSystem.Save();
+    }
+
     private void PlayerDiedHandler()
     {
         _gameOverPanel.gameObject.SetActive(true);
@@ -72,20 +84,26 @@ public class GameManager : MonoBehaviour
                 _enemy.Health.Damage(_player.CurrentWeapon.GetDamage());
             }
 
-            //if (_isPreviousHead)
-            //{
-            //    int actualDamage = _headDamageToPlayer - _equipManager.GetHeadShield();
-            //    _player.Health.Damage(actualDamage);
-            //    _isPreviousHead = !_isPreviousHead;
-            //}
-            //else
-            {
-                int actualDamage = _damageToPlayer - _equipManager.GetBodyShield();
-                _player.Health.Damage(actualDamage);
-                _isPreviousHead = !_isPreviousHead;
-            }
+            _player.Health.Damage(CalculateDamage());
+            _isPreviousHead = !_isPreviousHead;
 
             _inventoryManager.RemoveBullet(_player.CurrentWeapon.GetWeaponType(), _player.CurrentWeapon.GetCountOfShots());
         }
+    }
+
+    private int CalculateDamage()
+    {
+        int actualDamage = 0;
+
+        if (_isPreviousHead)
+        {
+            actualDamage = _headDamageToPlayer - _equipManager.GetHeadShield();
+        }
+        else
+        {
+            actualDamage = _damageToPlayer - _equipManager.GetBodyShield();
+        }
+
+        return actualDamage;
     }
 }

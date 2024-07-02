@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -85,6 +86,8 @@ public class Stack : MonoBehaviour
 
             _image.sprite = _inventoryItem.Sprite;
         }
+
+        UpdateText();
     }
 
     public void Init(InventoryItem randomItem)
@@ -103,6 +106,17 @@ public class Stack : MonoBehaviour
     public void SetCountToZero()
     {
         _currentCount = 0;
+        UpdateText();
+    }
+
+    public int GetCount()
+    {
+        return _currentCount;
+    }
+
+    public void SetCount(int count)
+    {
+        _currentCount = count;
         UpdateText();
     }
 }

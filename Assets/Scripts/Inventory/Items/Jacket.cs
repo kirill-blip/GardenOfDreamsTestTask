@@ -1,4 +1,3 @@
-﻿public class Jacket : InventoryItem
+﻿public class Jacket : ShieldItem
 {
-    public int Shield;
 }

@@ -1,21 +1,22 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private int _currentHealth = 50;
     [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private HealthBar _healthBar;
 
-    private HealthBar _healthBar;
+    private bool _isLoaded = false;
 
     public event UnityAction EntityDied;
 
     private void Start()
     {
-        _healthBar = GetComponentInChildren<HealthBar>();
-
-        ResetHealth();
+        if (!_isLoaded)
+        {
+            ResetHealth();
+        }
     }
 
     private void Update()
@@ -60,5 +61,18 @@ public class Health : MonoBehaviour
     private void UpdateHealthBar()
     {
         _healthBar.SetHealth(_currentHealth);
+    }
+
+    public int GetCurrentHealth()
+    {
+        return _currentHealth;
+    }
+
+    public void SetHealth(int health)
+    {
+        _currentHealth = health;
+        UpdateHealthBar();
+
+        _isLoaded = true;
     }
 }

@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sprite: {fileID: 21300000, guid: 34d3bd243bacf7c4abd5cfed3cfd5ec0, type: 3}
-  Weight: 0
+  Weight: 1
   Count: 1
   MaxCount: 6
   HitPoints: 50
