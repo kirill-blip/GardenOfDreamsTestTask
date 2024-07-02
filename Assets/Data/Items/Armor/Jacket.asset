@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d13f184fec8a304fa618564d5c0c8c7, type: 3}
   m_Name: Jacket
   m_EditorClassIdentifier: 
+  Name: "\u041A\u0443\u0440\u0442\u043A\u0430"
   Sprite: {fileID: 21300000, guid: 441b5de4095d9234d8489fde9e2b3ca8, type: 3}
-  Weight: 3
+  Weight: 1
   Count: 1
   MaxCount: 1

@@ -23,8 +23,8 @@ public class EquipManager : MonoBehaviour
         _currentBodyArmor = shield;
         _bodyArmorImage.sprite = shield.Sprite;
 
-        _bodyArmorText.text = shield.Shield.ToString();
-        _bodyArmorShield = shield.Shield;
+        _bodyArmorText.text = shield.Shield.Value.ToString();
+        _bodyArmorShield = shield.Shield.Value;
     }
 
     public void EquipHeadArmor(ShieldItem shieldItem)
@@ -32,8 +32,8 @@ public class EquipManager : MonoBehaviour
         _currentHeadArmor = shieldItem;
         _headArmorImage.sprite = shieldItem.Sprite;
 
-        _headArmorText.text = shieldItem.Shield.ToString();
-        _headArmorShield = shieldItem.Shield;
+        _headArmorText.text = shieldItem.Shield.Value.ToString();
+        _headArmorShield = shieldItem.Shield.Value;
     }
 
     public int GetBodyShield()

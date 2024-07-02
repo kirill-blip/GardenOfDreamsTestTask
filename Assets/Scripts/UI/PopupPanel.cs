@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PopupPanel : MonoBehaviour
 {
+    [Space(10f)]
     [SerializeField] private GameObject _shieldInfo;
     [SerializeField] private TextMeshProUGUI _shieldInfoText;
     [SerializeField] private TextMeshProUGUI _hitPointText;
@@ -15,6 +16,7 @@ public class PopupPanel : MonoBehaviour
 
     [Space(10f)]
     [SerializeField] private Image _image;
+    [SerializeField] private TextMeshProUGUI _text;
 
     [Space(10f)]
     [SerializeField] private Button _deleteButton;
@@ -48,7 +50,7 @@ public class PopupPanel : MonoBehaviour
     private void HealButtonHandler()
     {
         _inventoryManager.RemoveItem(_inventoryItem);
-        FindObjectOfType<Player>().Health.Heal((_inventoryItem as AidKit).HitPoints);
+        FindObjectOfType<Player>().Health.Heal((_inventoryItem as AidKit).HitPoints.Value);
 
         Disenable();
     }
@@ -110,7 +112,7 @@ public class PopupPanel : MonoBehaviour
 
         _inventoryItem = inventoryItem;
         _image.sprite = _inventoryItem.Sprite;
-
+        _text.text = inventoryItem.Name;
         _weightText.text = inventoryItem.Weight.ToString();
 
         ResetPanel();
@@ -121,7 +123,7 @@ public class PopupPanel : MonoBehaviour
                 _healButton.gameObject.SetActive(true);
                 _hitPointText.gameObject.SetActive(true);
 
-                _hitPointText.text = $"+{aidKit.HitPoints}HP";
+                _hitPointText.text = $"+{aidKit.HitPoints.Value}HP";
                 break;
             case Bullets:
                 _buyButton.gameObject.SetActive(true);
@@ -131,7 +133,7 @@ public class PopupPanel : MonoBehaviour
                 _equipButton.gameObject.SetActive(true);
                 _shieldInfo.gameObject.SetActive(true);
 
-                _shieldInfoText.text = shieldItem.Shield.ToString();
+                _shieldInfoText.text = shieldItem.Shield.Value.ToString();
                 break;
             default:
                 RectTransform buttonTransform = _deleteButton.GetComponent<RectTransform>();

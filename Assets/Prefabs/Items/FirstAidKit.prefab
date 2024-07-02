@@ -260,4 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InventoryItemData: {fileID: 11400000, guid: ebeedd65a5e6515469ce6045e6771f40, type: 2}
-  HitPoints: 50
+  HitPoints:
+    UseConstant: 0
+    ConstantValue: 50
+    Variable: {fileID: 11400000, guid: 798a381083f56a6418ef0ba7f666b14c, type: 2}

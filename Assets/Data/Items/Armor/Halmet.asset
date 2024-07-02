@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d13f184fec8a304fa618564d5c0c8c7, type: 3}
   m_Name: Halmet
   m_EditorClassIdentifier: 
+  Name: "\u0428\u043B\u0435\u043C"
   Sprite: {fileID: 21300000, guid: 3442776f35d689941b1c742f6d3d6c96, type: 3}
   Weight: 1
   Count: 1

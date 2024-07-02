@@ -4,11 +4,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameOverPanel _gameOverPanel;
+    [SerializeField] private GameObject _main;
 
     private Player _player;
     private Enemy _enemy;
     private InventoryManager _inventoryManager;
     private SaveSystem _saveSystem;
+
+    private bool _isPlayerDied;
 
     private void Awake()
     {
@@ -36,12 +39,20 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (_isPlayerDied)
+        {
+            return;
+        }
+
         _saveSystem.Save();
     }
 
     private void PlayerDiedHandler()
     {
+        _isPlayerDied = true;
+
         _gameOverPanel.gameObject.SetActive(true);
+        _main.gameObject.SetActive(false);
         _saveSystem.DeleteData();
     }
 

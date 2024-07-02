@@ -5,6 +5,9 @@ public class InventoryItem : MonoBehaviour
     public InventoryItemData InventoryItemData;
 
     [HideInInspector]
+    public string Name => InventoryItemData.Name;
+
+    [HideInInspector]
     public Sprite Sprite => InventoryItemData.Sprite;
     
     [HideInInspector]

@@ -1,4 +1,4 @@
 ﻿public class AidKit : InventoryItem
 {
-    public int HitPoints;
+    public IntReference HitPoints;
 }

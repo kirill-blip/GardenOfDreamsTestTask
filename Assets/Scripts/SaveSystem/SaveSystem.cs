@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
@@ -81,14 +80,23 @@ public class SaveSystem : MonoBehaviour
 
     private void SaveHealth()
     {
-        HealthData playerHealth = new HealthData(FindObjectOfType<Player>().Health.GetCurrentHealth());
-        HealthData enemyHealth = new HealthData(FindObjectOfType<Enemy>().Health.GetCurrentHealth());
+        Player player = FindObjectOfType<Player>();
+        Enemy enemy = FindObjectOfType<Enemy>();
 
-        string playerData = JsonUtility.ToJson(playerHealth);
-        string enemyData = JsonUtility.ToJson(enemyHealth);
+        if (player is not null)
+        {
+            HealthData playerHealthData = new HealthData(player.Health.GetCurrentHealth());
+            string playerData = JsonUtility.ToJson(playerHealthData);
+            File.WriteAllText(Path.Combine(Application.dataPath, PlayerHealthFileName), playerData);
+        }
 
-        File.WriteAllText(Path.Combine(Application.dataPath, PlayerHealthFileName), playerData);
-        File.WriteAllText(Path.Combine(Application.dataPath, EnemyHealthFileName), enemyData);
+
+        if (enemy is not null)
+        {
+            HealthData enemyHealthData = new HealthData(enemy.Health.GetCurrentHealth());
+            string enemyData = JsonUtility.ToJson(enemyHealthData);
+            File.WriteAllText(Path.Combine(Application.dataPath, EnemyHealthFileName), enemyData);
+        }
     }
 
     private void LoadHealth()
