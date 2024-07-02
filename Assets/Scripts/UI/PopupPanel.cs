@@ -62,7 +62,7 @@ public class PopupPanel : MonoBehaviour
     {
         EquipManager equipManager = FindObjectOfType<EquipManager>();
 
-        if (_inventoryItem is ShieldItem shieldItem)
+        if (_inventoryItem is BodyShield bodyShield)
         {
             if (equipManager.HasBodyArmor())
             {
@@ -73,35 +73,21 @@ public class PopupPanel : MonoBehaviour
                 _inventoryManager.RemoveItem(_inventoryItem);
             }
 
-            equipManager.EquipBodyArmor(shieldItem);
+            equipManager.EquipBodyArmor(bodyShield);
         }
 
-
-        if (_inventoryItem.GetType() == typeof(Cap))
+        if (_inventoryItem is HeadShield headShield)
         {
-            if (!equipManager.HasHeadArmor())
+            if (equipManager.HasHeadArmor())
             {
-                _inventoryManager.RemoveItem(_inventoryItem);
-                equipManager.EquipHeadArmor(cap: (_inventoryItem as Cap));
+                _inventoryManager.Swap(_inventoryItem, equipManager.GetHeadArmor());
             }
             else
             {
-                _inventoryManager.Swap(_inventoryItem, equipManager.GetHeadArmor());
-                equipManager.EquipHeadArmor(cap: (_inventoryItem as Cap));
-            }
-        }
-        else if (_inventoryItem.GetType() == typeof(Halmet))
-        {
-            if (!equipManager.HasHeadArmor())
-            {
                 _inventoryManager.RemoveItem(_inventoryItem);
-                equipManager.EquipHeadArmor(halmet: (_inventoryItem as Halmet));
             }
-            else
-            {
-                _inventoryManager.Swap(_inventoryItem, equipManager.GetHeadArmor());
-                equipManager.EquipHeadArmor(halmet: (_inventoryItem as Halmet));
-            }
+
+            equipManager.EquipHeadArmor(headShield);
         }
 
         Disenable();
@@ -140,29 +126,11 @@ public class PopupPanel : MonoBehaviour
                 _buyButton.gameObject.SetActive(true);
                 _weightInfo.anchoredPosition = new Vector2(0, _weightInfo.anchoredPosition.y);
                 break;
-            case BodyArmor bodyArmor:
+            case ShieldItem shieldItem:
                 _equipButton.gameObject.SetActive(true);
                 _shieldInfo.gameObject.SetActive(true);
 
-                _shieldInfoText.text = bodyArmor.Shield.ToString();
-                break;
-            case Jacket jacket:
-                _equipButton.gameObject.SetActive(true);
-                _shieldInfo.gameObject.SetActive(true);
-
-                _shieldInfoText.text = jacket.Shield.ToString();
-                break;
-            case Cap cap:
-                _equipButton.gameObject.SetActive(true);
-                _shieldInfo.gameObject.SetActive(true);
-
-                _shieldInfoText.text = cap.Shield.ToString();
-                break;
-            case Halmet halmet:
-                _equipButton.gameObject.SetActive(true);
-                _shieldInfo.gameObject.SetActive(true);
-
-                _shieldInfoText.text = halmet.Shield.ToString();
+                _shieldInfoText.text = shieldItem.Shield.ToString();
                 break;
         }
     }

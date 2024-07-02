@@ -103,10 +103,7 @@ public class InventoryManager : MonoBehaviour
 
         switch (inventoryItem)
         {
-            case BodyArmor:
-            case Jacket:
-            case Halmet:
-            case Cap:
+            case ShieldItem:
             case AidKit:
                 stack = _inventoryStacks.LastOrDefault(x => x.InventoryItem.GetType() == inventoryItem.GetType());
                 stack.RemoveItem();

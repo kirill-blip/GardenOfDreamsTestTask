@@ -26,23 +26,13 @@ public class EquipManager : MonoBehaviour
         _bodyArmorShield = shield.Shield;
     }
 
-    public void EquipHeadArmor(Cap cap = null, Halmet halmet = null)
+    public void EquipHeadArmor(ShieldItem shieldItem)
     {
-        if (cap is not null)
-        {
-            _currentHeadArmor = cap;
-            _headArmorImage.sprite = cap.Sprite;
-            _headArmorText.text = cap.Shield.ToString();
-            _headArmorShield = cap.Shield;
-        }
+        _currentHeadArmor = shieldItem;
+        _headArmorImage.sprite = shieldItem.Sprite;
 
-        if (halmet is not null)
-        {
-            _currentHeadArmor = halmet;
-            _headArmorImage.sprite = halmet.Sprite;
-            _headArmorText.text = halmet.Shield.ToString();
-            _headArmorShield = halmet.Shield;
-        }
+        _headArmorText.text = shieldItem.Shield.ToString();
+        _headArmorShield = shieldItem.Shield;
     }
 
     public int GetBodyShield()
@@ -77,22 +67,14 @@ public class EquipManager : MonoBehaviour
 
     public void Equip(EquipmentData equipment)
     {
-        if (equipment.BodyIventoryItem is ShieldItem shieldItem)
+        if (equipment.BodyIventoryItem is BodyShield shieldItem)
         {
             EquipBodyArmor(shieldItem);
         }
 
-        if (equipment.HeadIventoryItem is not null)
+        if (equipment.HeadIventoryItem is HeadShield headShield)
         {
-            switch (equipment.HeadIventoryItem)
-            {
-                case Halmet halmet:
-                    EquipHeadArmor(halmet: halmet);
-                    break;
-                case Cap cap:
-                    EquipHeadArmor(cap: cap);
-                    break;
-            }
+            EquipHeadArmor(headShield);
         }
     }
 }

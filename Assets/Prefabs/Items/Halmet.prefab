@@ -256,12 +256,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5126105092924640219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae5263cc04cd0814cb02b07c17d6058e, type: 3}
+  m_Script: {fileID: 11500000, guid: aeb0de5be46c7884f9a51064b4808546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Sprite: {fileID: 21300000, guid: 3442776f35d689941b1c742f6d3d6c96, type: 3}
   Weight: 1
   Count: 1
   MaxCount: 1
-  HeadType: 1
   Shield: 10
+  HeadType: 1
