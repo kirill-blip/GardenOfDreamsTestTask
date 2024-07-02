@@ -4,15 +4,16 @@ using UnityEngine.UI;
 
 public class EquipManager : MonoBehaviour
 {
-    [Space(10f)]
-    [SerializeField] private InventoryItem _currentBodyArmor;
+    [Header("Body")]
     [SerializeField] private Image _bodyArmorImage;
     [SerializeField] private TextMeshProUGUI _bodyArmorText;
-
-    [Space(10f)]
-    [SerializeField] private InventoryItem _currentHeadArmor;
+    
+    [Header("Head")]
     [SerializeField] private Image _headArmorImage;
     [SerializeField] private TextMeshProUGUI _headArmorText;
+    
+    private InventoryItem _currentBodyArmor;
+    private InventoryItem _currentHeadArmor;
 
     private int _bodyArmorShield;
     private int _headArmorShield;

@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using UnityEditor;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
@@ -112,5 +114,35 @@ public class SaveSystem : MonoBehaviour
             FindObjectOfType<Enemy>().Health.SetHealth(enemyHealth.Health);
         }
 
+    }
+
+    public void DeleteData()
+    {
+        DeleteAllData();
+    }
+
+    [MenuItem("Tools/Delete Saved Data")]
+    private static void DeleteAllData()
+    {
+        DeleteData(EnemyHealthFileName);
+        DeleteData(PlayerHealthFileName);
+        DeleteData(EquipmentFileName);
+        DeleteData(InvetoryFileName);
+
+
+#if UNITY_EDITOR
+        Tools.RefreshProjectView();
+        Tools.ClearConsole();
+#endif
+    }
+
+    private static void DeleteData(string fileName)
+    {
+        string fullPath = Path.Combine(Application.dataPath, fileName);
+
+        if (File.Exists(Path.Combine(Application.dataPath, fileName)))
+        {
+            File.Delete(Path.Combine(Application.dataPath, fileName));
+        }
     }
 }

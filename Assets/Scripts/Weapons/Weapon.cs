@@ -4,9 +4,9 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] private WeaponData _weaponData;
 
-    public WeaponType GetWeaponType()
+    public WeaponData GetWeaponType()
     {
-        return _weaponData.WeaponType;
+        return _weaponData;
     }
 
     public int GetDamage()

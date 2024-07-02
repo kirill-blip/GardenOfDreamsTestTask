@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +6,6 @@ public class Stack : MonoBehaviour
 {
     [SerializeField] private InventoryItem _inventoryItem;
 
-    [Space(10f)]
     [SerializeField] private TextMeshProUGUI _countText;
     [SerializeField] private Image _image;
 

@@ -103,8 +103,23 @@ public class InventoryManager : MonoBehaviour
 
         switch (inventoryItem)
         {
-            case ShieldItem:
-            case AidKit:
+            case Bullets:
+                Bullets bullets = inventoryItem as Bullets;
+
+                foreach (var item in _inventoryStacks)
+                {
+                    if (item.InventoryItem is not null)
+                    {
+                        Bullets temp = item.InventoryItem as Bullets;
+
+                        if (temp is not null && temp.WeaponType == bullets.WeaponType)
+                        {
+                            item.SetCountToZero();
+                        }
+                    }
+                }
+                break;
+            default:
                 stack = _inventoryStacks.LastOrDefault(x => x.InventoryItem.GetType() == inventoryItem.GetType());
                 stack.RemoveItem();
 
@@ -123,24 +138,6 @@ public class InventoryManager : MonoBehaviour
 
                     _inventoryStacks.Remove(stack);
                     Destroy(stack.gameObject);
-                }
-                break;
-            case Bullets:
-                Bullets bullets = inventoryItem as Bullets;
-
-                foreach (var item in _inventoryStacks)
-                {
-                    if (item.InventoryItem is not null)
-                    {
-                        Bullets temp = item.InventoryItem as Bullets;
-
-                        if (temp is not null && temp.WeaponType == bullets.WeaponType)
-                        {
-                            Debug.Log(temp is null);
-                            Debug.Log(temp.WeaponType.ToString());
-                            item.SetCountToZero();
-                        }
-                    }
                 }
                 break;
         }
@@ -174,7 +171,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public bool HasBullets(WeaponType weaponType)
+    public bool HasBullets(WeaponData weaponType)
     {
         foreach (Stack stack in _inventoryStacks)
         {
@@ -190,7 +187,7 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public void RemoveBullet(WeaponType weaponType, int count)
+    public void RemoveBullet(WeaponData weaponType, int count)
     {
         foreach (Stack stack in _inventoryStacks)
         {
