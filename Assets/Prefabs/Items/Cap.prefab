@@ -259,9 +259,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deae7a268a0f11944a4ae3a2b6407d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: d841e1c09deecb64aa727d97399db90c, type: 3}
-  Weight: 0.1
-  Count: 1
-  MaxCount: 1
-  HeadType: 2
+  InventoryItemData: {fileID: 11400000, guid: 89ac97359bfcab3429e8af6535a37c86, type: 2}
   Shield: 3

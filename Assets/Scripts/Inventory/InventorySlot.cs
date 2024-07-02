@@ -3,9 +3,9 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
-    [SerializeField] private Stack _stack;
-    [SerializeField] private RectTransform _stackTransform;
+    private Stack _stack;
 
+    private RectTransform _stackTransform;
     private RectTransform _rectTransform;
 
     private void Awake()

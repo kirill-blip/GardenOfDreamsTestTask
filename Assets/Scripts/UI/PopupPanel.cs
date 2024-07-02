@@ -18,6 +18,7 @@ public class PopupPanel : MonoBehaviour
 
     [Space(10f)]
     [SerializeField] private Button _deleteButton;
+    [SerializeField] private int _defaultPositionXOfDeleteButton = 125;
 
     [Space(10f)]
     [SerializeField] private Button _healButton;
@@ -132,11 +133,18 @@ public class PopupPanel : MonoBehaviour
 
                 _shieldInfoText.text = shieldItem.Shield.ToString();
                 break;
+            default:
+                RectTransform buttonTransform = _deleteButton.GetComponent<RectTransform>();
+                buttonTransform.anchoredPosition = new Vector2(0, buttonTransform.anchoredPosition.y);
+                break;
         }
     }
 
     public void ResetPanel()
     {
+        RectTransform buttonTransform = _deleteButton.GetComponent<RectTransform>();
+        buttonTransform.anchoredPosition = new Vector2(_defaultPositionXOfDeleteButton, buttonTransform.anchoredPosition.y);
+
         _weightInfo.anchoredPosition = new Vector2(_defaultPositionXOfWeight, _weightInfo.anchoredPosition.y);
 
         _shieldInfo.SetActive(false);

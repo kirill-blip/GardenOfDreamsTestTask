@@ -2,10 +2,17 @@
 
 public class InventoryItem : MonoBehaviour
 {
-    public Sprite Sprite;
+    public InventoryItemData InventoryItemData;
 
-    public float Weight;
+    [HideInInspector]
+    public Sprite Sprite => InventoryItemData.Sprite;
+    
+    [HideInInspector]
+    public float Weight => InventoryItemData.Weight;
 
-    public int Count;
-    public int MaxCount;
+    [HideInInspector]
+    public int Count => InventoryItemData.Count;
+
+    [HideInInspector]
+    public int MaxCount => InventoryItemData.MaxCount;
 }

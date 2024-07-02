@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5571563c43bd4f428e4d3abaa5be13f, type: 3}
-  m_Name: Rifle
+  m_Script: {fileID: 11500000, guid: 5d13f184fec8a304fa618564d5c0c8c7, type: 3}
+  m_Name: BodyArmor
   m_EditorClassIdentifier: 
-  Damage: 9
-  CountOfShots: 3
+  Sprite: {fileID: 21300000, guid: e06feb8961b31e54b9d08fd08b8152bf, type: 3}
+  Weight: 10
+  Count: 1
+  MaxCount: 1
