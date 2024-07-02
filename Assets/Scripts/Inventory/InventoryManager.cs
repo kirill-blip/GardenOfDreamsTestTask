@@ -153,7 +153,7 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log(stack == null);
 
-        if (stack == null)
+        if (stack == null && _inventorySlots.Any(x => !x.HasItem()))
         {
             Stack createdRandomStack = Instantiate(_stackPrefab);
             createdRandomStack.Init(randomItem);
@@ -165,7 +165,7 @@ public class InventoryManager : MonoBehaviour
 
             StartCoroutine(AddItemToRandomSlot(createdRandomStack));
         }
-        else
+        else if (stack is not null && !stack.IsStackFull())
         {
             stack.AddItem();
         }
@@ -249,10 +249,6 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i < stackData.Count; i++)
         {
-            Debug.Log($"InventoryItem: {stackData[i].InventoryItem.Sprite.name}");
-            Debug.Log($"IndexOfSlot: {stackData[i].IndexOfSlot}");
-            Debug.Log($"Count: {stackData[i].Count}");
-
             AddItem(stackData[i].InventoryItem, _inventorySlots[stackData[i].IndexOfSlot], stackData[i].Count);
         }
 
